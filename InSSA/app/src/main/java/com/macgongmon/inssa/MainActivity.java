@@ -3,12 +3,11 @@ package com.macgongmon.inssa;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
-import android.service.notification.NotificationListenerService;
-import android.service.notification.StatusBarNotification;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity{
     public final String TAG = getClass().getSimpleName();
     public static DBOpenHelper dbOpenHelper;
     Button btnSearch, btnDelete;
-    WebView webView;
 
 
     @Override
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        webView = (WebView)findViewById(R.id.webview);
 
     }
 
