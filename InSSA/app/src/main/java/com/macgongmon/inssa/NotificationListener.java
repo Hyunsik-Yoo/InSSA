@@ -18,12 +18,13 @@ import java.util.TimeZone;
 public class NotificationListener extends NotificationListenerService {
     public final String TAG = getClass().getSimpleName();
     public final String KAKAO_PACKAGE = "com.kakao.talk";
-    private Integer messageCount;
-    private String timeIndex;
+    public static Integer messageCount;
+    public static String timeIndex;
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         String packageName = sbn.getPackageName();
+        //Log.d(TAG,packageName);
 
         if(packageName.equals(KAKAO_PACKAGE)){
             String now = getTimeNow();
@@ -67,10 +68,20 @@ public class NotificationListener extends NotificationListenerService {
      */
     public static String getTimeNow(){
         TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date());
 
         return nowAsISO;
+    }
+
+    public static void refresh(){
+        String now = getTimeNow();
+        if(!timeIndex.equals(now)){
+            // 날짜라 다르단 소리는 DB에 업데이트를 하고 timeIndex 변경하고, message count 초기화시켜야함
+            MainActivity.dbOpenHelper.insertDateCount(timeIndex,messageCount.toString());
+            timeIndex = getTimeNow();
+            messageCount = 0;
+        }
     }
 }
