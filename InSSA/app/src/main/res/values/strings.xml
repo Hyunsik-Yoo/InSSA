@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">InSSA</string>
-    <string name="menu_mypoint">나의 위치 보기</string>
+    <string name="menu_mypoint">내 인싸티어 보기</string>
     <string name="menu_refresh">새로고침</string>
+    <string name="menu_delete_log">내 기록 지우기</string>
     <string name="main_listview_date">날짜</string>
     <string name="main_listview_count">카운트</string>
+    <string name="menu_auth">권한얻기</string>
 </resources>

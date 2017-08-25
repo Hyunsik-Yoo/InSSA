@@ -1,9 +1,12 @@
 package com.macgongmon.inssa;
 
 import android.app.Notification;
+import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
 import java.text.DateFormat;
@@ -27,18 +30,8 @@ public class NotificationListener extends NotificationListenerService {
         //Log.d(TAG,packageName);
 
         if(packageName.equals(KAKAO_PACKAGE)){
-            String now = getTimeNow();
-
-            if(timeIndex.equals(now)){
-                // 같은날짜에 온 카톡알림이면 message count 증가시키기
-                messageCount += 1;
-            }
-            else{
-                // 날짜라 다르단 소리는 DB에 업데이트를 하고 timeIndex 변경하고, message count 초기화시켜야함
-                MainActivity.dbOpenHelper.insertDateCount(timeIndex,messageCount.toString());
-                timeIndex = getTimeNow();
-                messageCount = 1;
-            }
+            refresh();
+            messageCount += 1;
         }
     }
 
@@ -47,9 +40,12 @@ public class NotificationListener extends NotificationListenerService {
         super.onNotificationRemoved(sbn);
     }
 
+
+
     @Override
     public void onCreate() {
-        messageCount = 0;
+        MainActivity.dbOpenHelper = new DBOpenHelper(getApplicationContext()).open();
+        messageCount = MainActivity.dbOpenHelper.getTodayCount(getTimeNow());
         timeIndex = getTimeNow();
         Log.d(TAG,"NotificationListener created!");
         super.onCreate();
@@ -68,7 +64,7 @@ public class NotificationListener extends NotificationListenerService {
      */
     public static String getTimeNow(){
         TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date());
 
@@ -77,9 +73,10 @@ public class NotificationListener extends NotificationListenerService {
 
     public static void refresh(){
         String now = getTimeNow();
+        MainActivity.dbOpenHelper.updateTodayCount(timeIndex,messageCount.toString());
+
         if(!timeIndex.equals(now)){
             // 날짜라 다르단 소리는 DB에 업데이트를 하고 timeIndex 변경하고, message count 초기화시켜야함
-            MainActivity.dbOpenHelper.insertDateCount(timeIndex,messageCount.toString());
             timeIndex = getTimeNow();
             messageCount = 0;
         }

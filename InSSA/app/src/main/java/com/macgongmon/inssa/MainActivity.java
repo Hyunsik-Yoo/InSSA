@@ -1,75 +1,36 @@
 package com.macgongmon.inssa;
 
-import android.app.Activity;
-import android.app.ActivityManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
 
     public final String TAG = getClass().getSimpleName();
     public static DBOpenHelper dbOpenHelper;
-    Button btnSearch, btnDelete;
     ListView listView;
     SwipeRefreshLayout refreshLayout;
+    TextView myPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
-        //startActivity(intent);
+        myPoint = (TextView)findViewById(R.id.my_point);
         //isServiceRunningCheck();
 
-        dbOpenHelper = new DBOpenHelper(this).open();
-
-        btnSearch = (Button)findViewById(R.id.btn_search);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List result = new ArrayList<>(dbOpenHelper.getAllData());
-                Iterator iterator = result.iterator();
-                StringBuilder stringBuilder = new StringBuilder();
-
-                while(iterator.hasNext()){
-                    ArrayList<String> countPair = (ArrayList<String>)iterator.next();
-                    stringBuilder.append("Date : " + countPair.get(0) + " Count : " + countPair.get(1)+"\n");
-                }
-                Toast.makeText(getApplicationContext(),stringBuilder.toString(),Toast.LENGTH_LONG).show();
-
-
-            }
-        });
-
-        btnDelete = (Button)findViewById(R.id.btn_delete);
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbOpenHelper.deleteAll();
-                Log.d(TAG,"delete all");
-            }
-        });
-
-        final MainListAdapter listviewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
-        //ArrayAdapter listviewAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,getAllItem());
+        MainListAdapter listviewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
         listView = (ListView)findViewById(R.id.list_view);
         listView.setAdapter(listviewAdapter);
 
@@ -78,13 +39,19 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onRefresh() {
                 NotificationListener.refresh();
-                listviewAdapter.notifyDataSetChanged();
-                refreshLayout.setRefreshing(false);
+                MainListAdapter listViewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
+                listView.setAdapter(listViewAdapter);
+                myPoint.setText("나의 인싸지수 : " + dbOpenHelper.getMyPoint() +  "점");
+                refreshLayout.setRefreshing(false); // 로딩표시 제거
             }
         });
 
+        myPoint.setText("나의 인싸지수 : " + dbOpenHelper.getMyPoint() +  "점");
+
+
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,37 +62,54 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog.Builder alertDialogBuilder;
         switch (item.getItemId()){
             case R.id.action_mypoint:
+                alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setMessage("준비중입니다.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).show();
+                break;
+
+            case R.id.action_delete_all:
+                alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle("내 기록 삭제");
+                alertDialogBuilder
+                        .setMessage("정말로 나의 데이터를 삭제하시겠습니까?")
+                        .setCancelable(false)
+                .setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dbOpenHelper.deleteAll();
+                        Log.d(TAG,"delete all");
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).show();
+                NotificationListener.messageCount = 0;
 
             case R.id.action_refresh:
+                NotificationListener.refresh();
+                MainListAdapter listViewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
+                listView.setAdapter(listViewAdapter);
+                myPoint.setText("나의 인싸지수 : " + dbOpenHelper.getMyPoint() +  "점");
+                break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.action_auth:
+                Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                startActivity(intent);
+                break;
         }
-
-
+        return super.onOptionsItemSelected(item);
     }
 
-    public boolean isServiceRunningCheck() {
-        ActivityManager manager = (ActivityManager) this.getSystemService(Activity.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            Log.d(TAG,service.service.getClassName());
-        }
-        return false;
-    }
 
-    public List getAllItem(){
-        List itemList = new ArrayList(dbOpenHelper.getAllData());
-        Iterator iterator = itemList.iterator();
-        List result = new ArrayList();
 
-        while(iterator.hasNext()){
-            ArrayList<String> countPair = (ArrayList<String>)iterator.next();
-            String date = countPair.get(0);
-            String count = countPair.get(1);
-            result.add(date + "\t - \t" + count + "점");
-        }
-        return result;
-    }
 }

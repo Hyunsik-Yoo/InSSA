@@ -18,7 +18,7 @@ import java.util.List;
 public class DBOpenHelper {
     public static SQLiteDatabase DB;
 
-    private static final String DB_NAME = "kakao_info.db";
+    private static final String DB_NAME = "kakao_info";
     private static final int DB_VERSION = 1;
 
     public static final String CREATE_KAKAO_LIST = "create table kakao_info (_id integer primary key " +
@@ -72,9 +72,8 @@ public class DBOpenHelper {
          * DB에 존재하는 날짜별 카톡카운팅 횟수를 모두 가져오기
          */
         DB = DBHelper.getReadableDatabase();
-        String tableName = "kakao_info";
 
-        Cursor cursor = DB.query(tableName,null,null,null,null,null,null);
+        Cursor cursor = DB.query(DB_NAME,null,null,null,null,null,null);
         List resultList = new ArrayList<>();
         while(cursor.moveToNext()){
             String date = cursor.getString(cursor.getColumnIndex("date"));
@@ -88,16 +87,24 @@ public class DBOpenHelper {
         return resultList;
     }
 
-    public void insertDateCount(String date, String count){
-        /**
-         * 자정이 지난경우 전날 날짜에 대한 카카오톡 개수를 파악하여 DB에 저장
-         */
+
+    public void updateTodayCount(String date, String count){
+        // 오늘날짜로 된 데이터가 있는지 확인. 없으면 새로운 row추가 .있으면 기존 count update
+
+        DB = DBHelper.getReadableDatabase();
+        Cursor cursor = DB.query(DB_NAME,null,"date=?",new String[]{date},null,null,null);
+
         DB = DBHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("date",date);
         values.put("count",count);
 
-        DB.insert("kakao_info",null,values);
+        DB = DBHelper.getWritableDatabase();
+        if(cursor.moveToFirst()){ // cursor에 객체가 존재하면 진입.
+            DB.update(DB_NAME,values,"date=?",new String[]{date});
+        }else{ // 오늘날짜로 된 데이터가 없는경우
+            DB.insert(DB_NAME,null,values);
+        }
     }
 
 
@@ -105,6 +112,33 @@ public class DBOpenHelper {
     public void deleteAll(){
         DB = DBHelper.getWritableDatabase();
         DB.delete("kakao_info",null,null);
+    }
+
+    public Integer getTodayCount(String date){
+        Integer count = 0;
+        DB = DBHelper.getReadableDatabase();
+        Cursor cursor = DB.query(DB_NAME,null,"date=?",new String[]{date},null,null,null);
+
+        if(cursor.moveToFirst()){
+            count = Integer.parseInt(cursor.getString(cursor.getColumnIndex("count")));
+        }
+        cursor.close();
+        return count;
+    }
+
+    public Integer getMyPoint(){
+        Integer myPoint = 0;
+        DB = DBHelper.getReadableDatabase();
+
+        Cursor cursor = DB.query(DB_NAME,null,null,null,null,null,null);
+
+        while(cursor.moveToNext()){
+            Integer count = Integer.parseInt(cursor.getString(cursor.getColumnIndex("count")));
+            myPoint +=count;
+        }
+        myPoint = myPoint/cursor.getCount();
+        cursor.close();
+        return myPoint;
     }
 
 }
