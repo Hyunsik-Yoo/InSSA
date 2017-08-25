@@ -28,13 +28,15 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         myPoint = (TextView)findViewById(R.id.my_point);
-        //isServiceRunningCheck();
-
-        MainListAdapter listviewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
         listView = (ListView)findViewById(R.id.list_view);
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
+
+
+        // 메인화면의 리스트뷰 어댑터 설정
+        MainListAdapter listviewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
         listView.setAdapter(listviewAdapter);
 
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
+        // 리스트뷰의 당겨서 새로고침 기능
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
+        // 초기화면에 토탈포인트 설정
         myPoint.setText("나의 인싸지수 : " + dbOpenHelper.getMyPoint() +  "점");
 
 
@@ -53,6 +56,11 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    /**
+     * 우측상단 메뉴리스트 설정
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -60,6 +68,13 @@ public class MainActivity extends AppCompatActivity{
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * 메뉴아이템들 선택했을 때 각 기능들 추가
+     * 내 인싸지수 위치 파악은 준비중
+     * 내 데이터 지우기 터치시 알림창나오면서 확인요청 받은 뒤 삭제
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder alertDialogBuilder;

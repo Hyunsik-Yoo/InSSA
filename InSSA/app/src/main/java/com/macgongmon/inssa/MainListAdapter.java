@@ -2,7 +2,6 @@ package com.macgongmon.inssa;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +65,11 @@ public class MainListAdapter extends BaseAdapter {
 
         ArrayList prev = (ArrayList)listItems.get(position+1);
 
+        /**
+         * 과거데이터와 비교하여 증가했으면 상승아이콘
+         * 동일하다면 flat아이콘
+         * 감소했으면 감소아이콘
+          */
         if(Integer.parseInt((String)current.get(1)) < Integer.parseInt((String)prev.get(1)))
             icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.ic_trending_down_black_48dp));
         else if(Integer.parseInt((String)current.get(1)) == Integer.parseInt((String)prev.get(1)))

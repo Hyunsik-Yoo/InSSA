@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,18 +106,24 @@ public class DBOpenHelper {
         }
     }
 
-
     // 가게이름 받아서 해당 가게를 DB에서 삭제
     public void deleteAll(){
         DB = DBHelper.getWritableDatabase();
         DB.delete("kakao_info",null,null);
     }
 
+
+    /**
+     * 오늘날짜의 count가져오기
+     * @param date
+     * @return
+     */
     public Integer getTodayCount(String date){
         Integer count = 0;
         DB = DBHelper.getReadableDatabase();
         Cursor cursor = DB.query(DB_NAME,null,"date=?",new String[]{date},null,null,null);
 
+        // 오늘날짜로 된 데이터가 존재하면 if문으로 들어가고 없으면 안들어가짐
         if(cursor.moveToFirst()){
             count = Integer.parseInt(cursor.getString(cursor.getColumnIndex("count")));
         }
@@ -126,6 +131,11 @@ public class DBOpenHelper {
         return count;
     }
 
+    /**
+     * 나의 토탈지수 파악
+     * 전체 저장된 지수들의 평균을 구하여 반환
+     * @return
+     */
     public Integer getMyPoint(){
         Integer myPoint = 0;
         DB = DBHelper.getReadableDatabase();

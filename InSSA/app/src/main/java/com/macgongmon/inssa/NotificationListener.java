@@ -24,10 +24,13 @@ public class NotificationListener extends NotificationListenerService {
     public static Integer messageCount;
     public static String timeIndex;
 
+    /**
+     * 알림이 왔을 때 카톡인지 확인한 뒤 카운팅
+     * @param sbn
+     */
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         String packageName = sbn.getPackageName();
-        //Log.d(TAG,packageName);
 
         if(packageName.equals(KAKAO_PACKAGE)){
             refresh();
@@ -41,7 +44,10 @@ public class NotificationListener extends NotificationListenerService {
     }
 
 
-
+    /**
+     * 서비스가 처음에 생성될때 한번 실행된다.(디바이스가 처음으로 켜질때에도 실행됨)
+     * DB오픈하고, timeIndex 초기화
+     */
     @Override
     public void onCreate() {
         MainActivity.dbOpenHelper = new DBOpenHelper(getApplicationContext()).open();
@@ -71,6 +77,10 @@ public class NotificationListener extends NotificationListenerService {
         return nowAsISO;
     }
 
+    /**
+     * DB새로고침
+     * DB에 최신정보로 업데이트 한뒤, index날짜와 현재날짜가 다르다면 초기화시켜줌
+     */
     public static void refresh(){
         String now = getTimeNow();
         MainActivity.dbOpenHelper.updateTodayCount(timeIndex,messageCount.toString());
