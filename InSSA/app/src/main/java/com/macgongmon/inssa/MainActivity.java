@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dbOpenHelper = new DBOpenHelper(this).open();
+
         myPoint = (TextView)findViewById(R.id.my_point);
         listView = (ListView)findViewById(R.id.list_view);
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
@@ -50,9 +52,6 @@ public class MainActivity extends AppCompatActivity{
 
         // 초기화면에 토탈포인트 설정
         myPoint.setText("나의 인싸지수 : " + dbOpenHelper.getMyPoint() +  "점");
-
-
-
     }
 
 

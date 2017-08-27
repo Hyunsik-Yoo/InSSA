@@ -146,7 +146,8 @@ public class DBOpenHelper {
             Integer count = Integer.parseInt(cursor.getString(cursor.getColumnIndex("count")));
             myPoint +=count;
         }
-        myPoint = myPoint/cursor.getCount();
+        if(cursor.getCount()!=0)
+            myPoint = myPoint/cursor.getCount();
         cursor.close();
         return myPoint;
     }

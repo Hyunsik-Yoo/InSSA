@@ -31,6 +31,7 @@ public class NotificationListener extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         String packageName = sbn.getPackageName();
+        Log.d(TAG,packageName);
 
         if(packageName.equals(KAKAO_PACKAGE)){
             refresh();
@@ -83,6 +84,10 @@ public class NotificationListener extends NotificationListenerService {
      */
     public static void refresh(){
         String now = getTimeNow();
+        if(messageCount == null){
+            messageCount = MainActivity.dbOpenHelper.getTodayCount(now);
+            timeIndex = now;
+        }
         MainActivity.dbOpenHelper.updateTodayCount(timeIndex,messageCount.toString());
 
         if(!timeIndex.equals(now)){
