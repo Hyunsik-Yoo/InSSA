@@ -7,24 +7,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.macgongmon.inssa.MainActivity">
-    
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:gravity="center">
-        
-        <ImageView
-            android:id="@+id/score_image"
-            android:layout_width="266dp"
-            android:layout_height="225dp"
-            android:src="@drawable/score_board"/>
+        android:layout_height="49dp"
+        android:background="@drawable/main_action_bg">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/my_point"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/main_logo"/>
 
+        <ImageButton
+            android:id="@+id/btn_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_menu"
+            android:background="@null"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            />
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="276.67dp"
+        android:background="@drawable/main_bg"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="210px"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:includeFontPadding="false"
+                android:id="@+id/my_point"/>
+
+            <TextView
+                android:id="@+id/main_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_total"
+                android:textColor="#ffffff"
+                android:layout_centerHorizontal="true"
+                android:layout_alignTop="@id/my_point"
+                android:textSize="25px"/>
+        </RelativeLayout>
+
+
+
+
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -38,7 +86,9 @@
             <ListView
                 android:id="@+id/list_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ListView>
+                android:layout_height="match_parent"
+                android:divider="@drawable/list_divider"
+                android:dividerHeight="1dp"></ListView>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

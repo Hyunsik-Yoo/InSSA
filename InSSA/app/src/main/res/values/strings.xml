@@ -6,4 +6,5 @@
     <string name="main_listview_date">날짜</string>
     <string name="main_listview_count">카운트</string>
     <string name="menu_auth">권한얻기</string>
+    <string name="main_total">당신의 인싸지수는?</string>
 </resources>

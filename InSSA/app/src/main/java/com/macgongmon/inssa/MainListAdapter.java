@@ -1,6 +1,8 @@
 package com.macgongmon.inssa;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +46,7 @@ public class MainListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Context context = parent.getContext();
-
+        Typeface font = Typeface.createFromAsset(context.getAssets(), "NotoSansCJKkr-Bold_0.otf");
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.main_listview,parent,false);
@@ -53,13 +55,24 @@ public class MainListAdapter extends BaseAdapter {
         ArrayList current = (ArrayList)listItems.get(position);
         ImageView icon = convertView.findViewById(R.id.main_list_icon);
         TextView date = convertView.findViewById(R.id.main_list_date);
+        date.setTypeface(font);
         TextView count = convertView.findViewById(R.id.main_list_count);
+        count.setTypeface(font);
 
         date.setText((String)current.get(0));
         count.setText((String)current.get(1));
 
+        if(position == 0){
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.today));
+            date.setTypeface(font, Typeface.BOLD);
+            date.setTextColor(Color.parseColor("#0E9B63"));
+            count.setTextColor(Color.parseColor("#0E9B63"));
+            count.setTypeface(font, Typeface.BOLD);
+            return convertView;
+        }
+
         if(position == getCount()-1){
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.ic_trending_flat_black_48dp));
+            icon.setImageResource(0);
             return convertView;
         }
 
@@ -71,11 +84,11 @@ public class MainListAdapter extends BaseAdapter {
          * 감소했으면 감소아이콘
           */
         if(Integer.parseInt((String)current.get(1)) < Integer.parseInt((String)prev.get(1)))
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.ic_trending_down_black_48dp));
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.down));
         else if(Integer.parseInt((String)current.get(1)) == Integer.parseInt((String)prev.get(1)))
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.ic_trending_flat_black_48dp));
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.today));
         else
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.ic_trending_up_black_48dp));
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.down));
 
         return convertView;
     }
