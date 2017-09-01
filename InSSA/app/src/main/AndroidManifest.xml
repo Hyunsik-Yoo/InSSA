@@ -21,7 +21,10 @@
 
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".LoadingActivity">
+        <activity
+            android:name=".LoadingActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
