@@ -39,6 +39,7 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
 
 
         dbOpenHelper = new DBOpenHelper(this).open();
+        NotificationListener.refresh();
 
         myPoint = (TextView)findViewById(R.id.my_point);
         listView = (ListView)findViewById(R.id.list_view);
