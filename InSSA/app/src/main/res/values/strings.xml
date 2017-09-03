@@ -7,4 +7,7 @@
     <string name="main_listview_count">카운트</string>
     <string name="menu_auth">권한얻기</string>
     <string name="main_total">당신의 인싸지수는?</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-7422694427130568/9960320947</string>
+
 </resources>

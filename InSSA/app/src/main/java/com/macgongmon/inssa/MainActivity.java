@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickListener{
 
@@ -36,6 +39,11 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().addTestDevice("6E7A7D4083F508597BB26B3EBA7F87FE").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         Typeface font = Typeface.createFromAsset(this.getAssets(), "NotoSansCJKkr-Bold_0.otf");
 
