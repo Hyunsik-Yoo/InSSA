@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,6 +25,8 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
 
     public final String TAG = getClass().getSimpleName();
     public static DBOpenHelper dbOpenHelper;
+    AnimationDrawable frameAnimation;
+    ImageView imgAnmi;
     ImageButton btnMenu;
     ListView listView;
     SwipeRefreshLayout refreshLayout;
@@ -46,6 +50,10 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
         btnMenu = (ImageButton)findViewById(R.id.btn_menu);
         mainTotal = (TextView)findViewById(R.id.main_total);
+        imgAnmi = (ImageView)findViewById(R.id.anmi_circle);
+
+        imgAnmi.setBackgroundResource(R.drawable.frame_anmi_list);
+        frameAnimation = (AnimationDrawable) imgAnmi.getBackground();
 
 
         mainTotal.setTypeface(font);
@@ -82,6 +90,18 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         int mActionBarSize = (int) styledAttributes.getDimension(0, 0);
         Log.d(TAG,mActionBarSize+"");
         styledAttributes.recycle();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            // 어플에 포커스가 갈때 시작된다
+            frameAnimation.start();
+        } else {
+            // 어플에 포커스를 떠나면 종료한다
+            frameAnimation.stop();
+        }
     }
 
     public void showPopup(View v) {
