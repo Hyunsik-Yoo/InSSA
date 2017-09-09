@@ -1,15 +1,18 @@
 package com.macgongmon.inssa;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,18 +21,27 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import org.json.JSONArray;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickListener{
 
     public final String TAG = getClass().getSimpleName();
     public static DBOpenHelper dbOpenHelper;
-    AnimationDrawable frameAnimation;
-    ImageView imgAnmi;
     ImageButton btnMenu;
     ListView listView;
     SwipeRefreshLayout refreshLayout;
@@ -58,10 +70,6 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
         btnMenu = (ImageButton)findViewById(R.id.btn_menu);
         mainTotal = (TextView)findViewById(R.id.main_total);
-        imgAnmi = (ImageView)findViewById(R.id.anmi_circle);
-
-        imgAnmi.setBackgroundResource(R.drawable.frame_anmi_list);
-        frameAnimation = (AnimationDrawable) imgAnmi.getBackground();
 
 
         mainTotal.setTypeface(font);
@@ -100,17 +108,6 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         styledAttributes.recycle();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            // 어플에 포커스가 갈때 시작된다
-            frameAnimation.start();
-        } else {
-            // 어플에 포커스를 떠나면 종료한다
-            frameAnimation.stop();
-        }
-    }
 
     public void showPopup(View v) {
         PopupMenu popup = new PopupMenu(this, v);
@@ -126,13 +123,14 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         AlertDialog.Builder alertDialogBuilder;
         switch (item.getItemId()){
             case R.id.action_mypoint:
-                alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setMessage("준비중입니다.").setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                }).show();
+                Integer score = Integer.parseInt(myPoint.getText().toString());
+                try {
+                    new threadScore().execute(score);
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 break;
 
             case R.id.action_delete_all:
@@ -169,5 +167,93 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class threadScore extends AsyncTask<Integer, Integer, String>{
+        ProgressDialog progressDialog;
+        AlertDialog.Builder alertDialogBuilder;
+        @Override
+        protected String doInBackground(Integer... scores) {
+            String result = null;
+            try {
+                String str_url = "http://192.168.1.101:8000/inssa/score?score=" + scores[0];
+                Log.d(TAG, str_url);
+
+                URL url = new URL(str_url);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                result = getStringFromInputStream(in);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // 서버에서 응답이 오기까지 로딩 Dialog화면 만들어 놓기
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("티어확인 진행중 입니다");
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            /**
+             * 서버에서 응답이와서 처리가 끝나면 로딩화면 숨기고
+             * 결과를 알려주는 화면을 띄우기
+             */
+            progressDialog.hide();
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                Log.d(TAG,jsonArray.toString());
+            }
+            catch (Exception e){
+
+            }
+            alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setMessage("result : "+ result).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.cancel();
+                }
+            }).show();
+
+            super.onPostExecute(result);
+        }
+    }
+
+    public static String getStringFromInputStream(InputStream is) {
+
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return sb.toString();
+
     }
 }

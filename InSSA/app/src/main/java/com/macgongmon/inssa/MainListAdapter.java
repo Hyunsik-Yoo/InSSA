@@ -51,8 +51,8 @@ public class MainListAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.main_listview,parent,false);
         }
-
         ArrayList current = (ArrayList)listItems.get(position);
+
         ImageView icon = convertView.findViewById(R.id.main_list_icon);
         TextView date = convertView.findViewById(R.id.main_list_date);
         date.setTypeface(font);
@@ -63,16 +63,20 @@ public class MainListAdapter extends BaseAdapter {
         count.setText((String)current.get(1));
 
         if(position == 0){
+            // 가장 첫번째 날짜는 글자 크기 크게
             icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.today));
             date.setTypeface(font, Typeface.BOLD);
             date.setTextColor(Color.parseColor("#0E9B63"));
-            count.setTextColor(Color.parseColor("#0E9B63"));
+            date.setTextSize(20);
+
             count.setTypeface(font, Typeface.BOLD);
+            count.setTextColor(Color.parseColor("#0E9B63"));
+            count.setTextSize(20);
             return convertView;
         }
 
         if(position == getCount()-1){
-            icon.setImageResource(0);
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.line));
             return convertView;
         }
 
@@ -86,9 +90,9 @@ public class MainListAdapter extends BaseAdapter {
         if(Integer.parseInt((String)current.get(1)) < Integer.parseInt((String)prev.get(1)))
             icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.down));
         else if(Integer.parseInt((String)current.get(1)) == Integer.parseInt((String)prev.get(1)))
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.today));
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.line));
         else
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.down));
+            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.up));
 
         return convertView;
     }
