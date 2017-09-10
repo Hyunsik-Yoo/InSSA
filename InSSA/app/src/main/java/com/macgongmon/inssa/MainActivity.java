@@ -28,6 +28,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -208,16 +209,32 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
              * 서버에서 응답이와서 처리가 끝나면 로딩화면 숨기고
              * 결과를 알려주는 화면을 띄우기
              */
+            JSONObject jsonObject = null;
+            Integer percentage = -1, ranking = -1, total = -1;
+            String level = null;
             progressDialog.hide();
             try {
-                JSONArray jsonArray = new JSONArray(result);
-                Log.d(TAG,jsonArray.toString());
-            }
-            catch (Exception e){
+                jsonObject = new JSONObject(result);
+                percentage = jsonObject.getInt("percentage");
+                ranking = jsonObject.getInt("ranking");
+                total = jsonObject.getInt("total");
+
+                if(percentage <= 30){
+                    level = "A";
+                }else if(percentage <= 60){
+                    level = "B";
+                }else{
+                    level = "C";
+                }
 
             }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
+
             alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-            alertDialogBuilder.setMessage("result : "+ result).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setMessage("당신은 전체 " + total + " 명중 " + ranking + "등으로 상위 " + percentage + "% 입니다\n" + level + "클래스에 속합니다!").setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.cancel();

@@ -77,7 +77,6 @@ public class WelcomeActivity extends Activity {
                 launchHomeScreen();
             }
         });
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

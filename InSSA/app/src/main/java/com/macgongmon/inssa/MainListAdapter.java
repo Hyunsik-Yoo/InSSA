@@ -28,6 +28,7 @@ public class MainListAdapter extends BaseAdapter {
         Collections.reverse(listItems);
     }
 
+
     @Override
     public int getCount() {
         return listItems.size();
@@ -96,4 +97,6 @@ public class MainListAdapter extends BaseAdapter {
 
         return convertView;
     }
+
+
 }
