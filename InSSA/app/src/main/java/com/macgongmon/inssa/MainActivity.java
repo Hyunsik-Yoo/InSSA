@@ -176,7 +176,7 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         protected String doInBackground(Integer... scores) {
             String result = null;
             try {
-                String str_url = "http://192.168.1.101:8000/inssa/score?score=" + scores[0];
+                String str_url = "http://168.188.127.132:8000/inssa/score?score=" + scores[0];
                 Log.d(TAG, str_url);
 
                 URL url = new URL(str_url);
