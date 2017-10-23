@@ -38,54 +38,56 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 
 public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickListener{
 
     public final String TAG = getClass().getSimpleName();
     public static DBOpenHelper dbOpenHelper;
-    ImageButton btnMenu;
-    ListView listView;
-    SwipeRefreshLayout refreshLayout;
-    TextView myPoint,mainTotal;
+
+    @BindView(R.id.btn_menu) ImageButton btnMenu;
+    @BindView(R.id.list_view) ListView listView;
+    @BindView(R.id.refresh_layout) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.my_point) TextView myPoint;
+    @BindView(R.id.main_total) TextView mainTotal;
+    @BindView(R.id.adView) AdView mAdView;
+
+    @OnClick(R.id.btn_menu)
+    void menuOnClickListener(View view){
+        PopupMenu popup = new PopupMenu(this, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, popup.getMenu());
+        popup.setOnMenuItemClickListener(this);
+        popup.show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        // 폰트 불러오기 및 폰트 적용
+        Typeface font = Typeface.createFromAsset(this.getAssets(), "NotoSansCJKkr-Bold_0.otf");
+        mainTotal.setTypeface(font);
+        myPoint.setTypeface(font);
+
+        // 테스트용 광고 요청
         //AdRequest adRequest = new AdRequest.Builder().addTestDevice("6E7A7D4083F508597BB26B3EBA7F87FE").build();
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        Typeface font = Typeface.createFromAsset(this.getAssets(), "NotoSansCJKkr-Bold_0.otf");
-
-
-
-
+        // DB로드(과거 데이터 로드)
         dbOpenHelper = new DBOpenHelper(this).open();
         NotificationListener.refresh();
-
-        myPoint = (TextView)findViewById(R.id.my_point);
-        listView = (ListView)findViewById(R.id.list_view);
-        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
-        btnMenu = (ImageButton)findViewById(R.id.btn_menu);
-        mainTotal = (TextView)findViewById(R.id.main_total);
-
-
-        mainTotal.setTypeface(font);
-        myPoint.setTypeface(font);
-        btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopup(view);
-            }
-        });
-
 
         // 메인화면의 리스트뷰 어댑터 설정
         MainListAdapter listviewAdapter = new MainListAdapter(dbOpenHelper.getAllData());
         listView.setAdapter(listviewAdapter);
+
 
         // 리스트뷰의 당겨서 새로고침 기능
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -99,23 +101,15 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
             }
         });
 
-        // 초기화면에 토탈포인트 설정
+        // 리스트뷰 드래그하면 맨위에 꺼 굵은글씨
+
+       // 초기화면에 토탈포인트 설정
         myPoint.setText(dbOpenHelper.getMyPoint()+"");
 
         final TypedArray styledAttributes = getApplicationContext().getTheme().obtainStyledAttributes(
                 new int[] { android.R.attr.actionBarSize });
         int mActionBarSize = (int) styledAttributes.getDimension(0, 0);
-        Log.d(TAG,mActionBarSize+"");
         styledAttributes.recycle();
-    }
-
-
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, popup.getMenu());
-        popup.setOnMenuItemClickListener(this);
-        popup.show();
     }
 
 
@@ -170,6 +164,7 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
         return super.onOptionsItemSelected(item);
     }
 
+    // 자신의 점수를 서버에보내 상위 %를 알아내는 쓰레드
     private class threadScore extends AsyncTask<Integer, Integer, String>{
         ProgressDialog progressDialog;
         AlertDialog.Builder alertDialogBuilder;
@@ -178,7 +173,6 @@ public class MainActivity extends Activity implements PopupMenu.OnMenuItemClickL
             String result = null;
             try {
                 String str_url = "http://168.188.127.132:8000/inssa/score?score=" + scores[0];
-                Log.d(TAG, str_url);
 
                 URL url = new URL(str_url);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

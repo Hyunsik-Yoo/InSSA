@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by hyunsikyoo on 24/08/2017.
  */
@@ -27,7 +30,6 @@ public class MainListAdapter extends BaseAdapter {
         listItems = input;
         Collections.reverse(listItems);
     }
-
 
     @Override
     public int getCount() {
@@ -46,38 +48,42 @@ public class MainListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
+        // 폰트 가져오기 위해 부모 그룹 가져옴
         Context context = parent.getContext();
         Typeface font = Typeface.createFromAsset(context.getAssets(), "NotoSansCJKkr-Bold_0.otf");
-        if(convertView == null){
+        if(convertView != null){
+            holder = (ViewHolder) convertView.getTag();
+        }
+        else{
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.main_listview,parent,false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         }
         ArrayList current = (ArrayList)listItems.get(position);
 
-        ImageView icon = convertView.findViewById(R.id.main_list_icon);
-        TextView date = convertView.findViewById(R.id.main_list_date);
-        date.setTypeface(font);
-        TextView count = convertView.findViewById(R.id.main_list_count);
-        count.setTypeface(font);
+        holder.date.setTypeface(font);
+        holder.count.setTypeface(font);
+        holder.date.setText((String)current.get(0));
+        holder.count.setText((String)current.get(1));
 
-        date.setText((String)current.get(0));
-        count.setText((String)current.get(1));
-
-        if(position == 0){
+        if(getItem(position).equals(getItem(0))){
             // 가장 첫번째 날짜는 글자 크기 크게
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.today));
-            date.setTypeface(font, Typeface.BOLD);
-            date.setTextColor(Color.parseColor("#0E9B63"));
-            date.setTextSize(20);
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.today));
+            holder.date.setTypeface(font, Typeface.BOLD);
+            holder.date.setTextColor(Color.parseColor("#0E9B63"));
+            holder.date.setTextSize(20);
 
-            count.setTypeface(font, Typeface.BOLD);
-            count.setTextColor(Color.parseColor("#0E9B63"));
-            count.setTextSize(20);
+            holder.count.setTypeface(font, Typeface.BOLD);
+            holder.count.setTextColor(Color.parseColor("#0E9B63"));
+            holder.count.setTextSize(20);
             return convertView;
         }
 
         if(position == getCount()-1){
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.line));
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.line));
             return convertView;
         }
 
@@ -89,13 +95,24 @@ public class MainListAdapter extends BaseAdapter {
          * 감소했으면 감소아이콘
           */
         if(Integer.parseInt((String)current.get(1)) < Integer.parseInt((String)prev.get(1)))
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.down));
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.down));
         else if(Integer.parseInt((String)current.get(1)) == Integer.parseInt((String)prev.get(1)))
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.line));
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.line));
         else
-            icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.up));
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.getContext(),R.drawable.up));
 
         return convertView;
+    }
+
+    static class ViewHolder {
+
+        @BindView(R.id.main_list_icon) ImageView icon;
+        @BindView(R.id.main_list_date) TextView date;
+        @BindView(R.id.main_list_count) TextView count;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 
