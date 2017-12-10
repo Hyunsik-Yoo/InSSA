@@ -24,20 +24,20 @@ class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presen
 
     override fun openDBHelper(context: Context) {
         DBOpenHelper.dbOpenHelper = DBOpenHelper(context)
-        DBOpenHelper.dbOpenHelper!!.open()
+        DBOpenHelper.dbOpenHelper.open()
     }
 
     override fun onClickedMenuDelete(){
-        DBOpenHelper.dbOpenHelper!!.deleteAll()
+        DBOpenHelper.dbOpenHelper.deleteAll()
         NotificationListener.messageCount = 0
         refreshData()
     }
 
     override fun refreshData(){
         NotificationListener.refresh()
-        val listViewAdapter = MainListAdapter(DBOpenHelper.dbOpenHelper!!.getAllData())
+        val listViewAdapter = MainListAdapter(DBOpenHelper.dbOpenHelper.getAllData())
         view.setAdapter(listViewAdapter)
-        view.setTotalScore(DBOpenHelper.dbOpenHelper!!.myPoint())
+        view.setTotalScore(DBOpenHelper.dbOpenHelper.myPoint())
     }
 
     override fun onMenuItemClick(item: MenuItem) {

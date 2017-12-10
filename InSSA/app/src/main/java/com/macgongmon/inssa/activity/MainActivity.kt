@@ -5,7 +5,9 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.support.v7.app.AlertDialog
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.PopupMenu
+import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -21,6 +23,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
 
     private val TAG = javaClass.simpleName
     private var presenter: MainActivityPresenter? = null
+    lateinit var listView: RecyclerView
 
     override fun onResume() {
         super.onResume()
@@ -66,6 +69,12 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = MainActivityPresenter(this)
+        listView = findViewById<RecyclerView>(R.id.list_view)
+
+        var layoutManager = LinearLayoutManager(this)
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
+        layoutManager.scrollToPosition(0)
+        listView.setLayoutManager(layoutManager);
 
         // 메뉴버튼 눌렀을때
         btn_menu.setOnClickListener { view ->
@@ -118,7 +127,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
     override fun setAdapter(adapter: MainListAdapter){
-        list_view.adapter = adapter
+        listView.adapter = adapter
     }
 
 
