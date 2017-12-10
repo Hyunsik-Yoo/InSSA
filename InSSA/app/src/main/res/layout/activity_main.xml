@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.macgongmon.inssa.MainActivity">
+    tools:context="com.macgongmon.inssa.activity.MainActivity">
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
@@ -106,7 +106,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@drawable/list_divider"
-                android:dividerHeight="1dp"></ListView>
+                android:dividerHeight="1dp">
+
+            </ListView>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -20,12 +20,12 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <meta-data android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
         </activity>
         <activity
-            android:name=".LoadingActivity"
+            android:name=".activity.LoadingActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".activity.WelcomeActivity"></activity>
 
         <activity android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
