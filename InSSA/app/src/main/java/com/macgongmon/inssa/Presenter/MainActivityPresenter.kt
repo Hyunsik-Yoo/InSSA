@@ -16,14 +16,10 @@ import com.macgongmon.inssa.MainActivityMVP
 
 class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presenter {
     var model: MainActivityMVP.Model? = null
-    var view: MainActivityMVP.View
-
-    init {
-        this.view = view
-    }
+    var view: MainActivityMVP.View = view
 
     override fun menuOnClicked(v: View) {
-        view!!.showPopupMenu(v)
+        view.showPopupMenu(v)
     }
 
     override fun openDBHelper(context: Context) {
@@ -40,23 +36,23 @@ class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presen
     override fun refreshData(){
         NotificationListener.refresh()
         val listViewAdapter = MainListAdapter(DBOpenHelper.dbOpenHelper!!.getAllData())
-        view!!.setAdapter(listViewAdapter)
-        view!!.setTotalScore(DBOpenHelper.dbOpenHelper!!.myPoint())
+        view.setAdapter(listViewAdapter)
+        view.setTotalScore(DBOpenHelper.dbOpenHelper!!.myPoint())
     }
 
     override fun onMenuItemClick(item: MenuItem) {
         when (item.itemId) {
             R.id.action_mypoint -> {
-                val totalPoint = view!!.getTotalPoint()
+                val totalPoint = view.getTotalPoint()
                 try {
                     //threadScore().execute(totalPoint)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
-            R.id.action_delete_all -> view!!.showDeleteDialog()
+            R.id.action_delete_all -> view.showDeleteDialog()
             R.id.action_refresh -> refreshData()
-            R.id.action_auth -> view!!.startSettingActivity()
+            R.id.action_auth -> view.startSettingActivity()
         }
     }
 }

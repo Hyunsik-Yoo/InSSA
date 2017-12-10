@@ -43,7 +43,7 @@ class NotificationListener : NotificationListenerService() {
     override fun onCreate() {
         DBOpenHelper.dbOpenHelper = DBOpenHelper(applicationContext).open()
         timeIndex = getTimeNow()
-        messageCount = DBOpenHelper.dbOpenHelper!!.getTodayCount(timeIndex)
+        messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(timeIndex)
         Log.d(TAG, "NotificationListener created!")
         super.onCreate()
     }
@@ -76,10 +76,10 @@ class NotificationListener : NotificationListenerService() {
          */
         fun refresh() {
             val now = getTimeNow()
-            messageCount = DBOpenHelper.dbOpenHelper!!.getTodayCount(now)
+            messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(now)
             timeIndex = now
 
-            DBOpenHelper.dbOpenHelper!!.updateTodayCount(timeIndex!!, messageCount!!.toString())
+            DBOpenHelper.dbOpenHelper.updateTodayCount(timeIndex, messageCount.toString())
 
             if (timeIndex != now) {
                 // 날짜라 다르단 소리는 DB에 업데이트를 하고 timeIndex 변경하고, message count 초기화시켜야함

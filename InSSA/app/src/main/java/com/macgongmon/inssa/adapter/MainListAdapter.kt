@@ -15,8 +15,6 @@ import android.widget.TextView
 import java.util.ArrayList
 import java.util.Collections
 
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.macgongmon.inssa.R
 
 /**
@@ -59,31 +57,26 @@ class MainListAdapter(input: List<*>) : BaseAdapter() {
             convertView!!.tag = holder
         }
         val current = listItems.get(position) as ArrayList<*>
-        //holder.date = convertView.findViewById(R.id.main_list_date)
-        holder.date!!.typeface = font
+        holder.date.typeface = font
+        holder.count.typeface = font
 
-        //holder.count = convertView.findViewById(R.id.main_list_count)
-        holder.count!!.typeface = font
-
-        holder.date!!.text = current[0] as String
-        holder.count!!.text = current[1] as String
-
-        //holder.icon = convertView.findViewById(R.id.main_list_icon)
+        holder.date.text = current[0] as String
+        holder.count.text = current[1] as String
         if (getItem(position) == getItem(0)) {
             // 가장 첫번째 날짜는 글자 크기 크게
-            holder.icon!!.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.today))
-            holder.date!!.setTypeface(font, Typeface.BOLD)
-            holder.date!!.setTextColor(Color.parseColor("#0E9B63"))
-            holder.date!!.textSize = 20f
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.today))
+            holder.date.setTypeface(font, Typeface.BOLD)
+            holder.date.setTextColor(Color.parseColor("#0E9B63"))
+            holder.date.textSize = 20f
 
-            holder.count!!.setTypeface(font, Typeface.BOLD)
-            holder.count!!.setTextColor(Color.parseColor("#0E9B63"))
-            holder.count!!.textSize = 20f
+            holder.count.setTypeface(font, Typeface.BOLD)
+            holder.count.setTextColor(Color.parseColor("#0E9B63"))
+            holder.count.textSize = 20f
             return convertView
         }
 
         if (position == count - 1) {
-            holder.icon!!.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.line))
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.line))
             return convertView
         }
 
@@ -95,11 +88,11 @@ class MainListAdapter(input: List<*>) : BaseAdapter() {
          * 감소했으면 감소아이콘
          */
         if (Integer.parseInt(current[1] as String) < Integer.parseInt(prev[1] as String))
-            holder.icon!!.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.down))
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.down))
         else if (Integer.parseInt(current[1] as String) == Integer.parseInt(prev[1] as String))
-            holder.icon!!.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.line))
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.line))
         else
-            holder.icon!!.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.up))
+            holder.icon.setImageDrawable(ContextCompat.getDrawable(convertView.context, R.drawable.up))
 
         return convertView
     }
