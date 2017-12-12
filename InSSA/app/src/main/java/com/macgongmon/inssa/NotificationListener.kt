@@ -4,6 +4,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import com.macgongmon.inssa.db.DBOpenHelper
+import com.macgongmon.inssa.model.Score
 
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -79,7 +80,8 @@ class NotificationListener : NotificationListenerService() {
             messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(now)
             timeIndex = now
 
-            DBOpenHelper.dbOpenHelper.updateTodayCount(timeIndex, messageCount.toString())
+            val score = Score(timeIndex, messageCount.toString())
+            DBOpenHelper.dbOpenHelper.updateTodayCount(score)
 
             if (timeIndex != now) {
                 // 날짜라 다르단 소리는 DB에 업데이트를 하고 timeIndex 변경하고, message count 초기화시켜야함

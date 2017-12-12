@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.macgongmon.inssa.model.Score
 
 import java.util.ArrayList
 
@@ -31,14 +32,14 @@ class DBOpenHelper(private val context: Context) {
         DB = DBHelper.readableDatabase
 
         val cursor = DB.query(DB_NAME, null, null, null, null, null, null)
-        val resultList = ArrayList<ArrayList<String>>()
+        val resultList = ArrayList<Score>()
 
         while (cursor.moveToNext()){
             val date = cursor.getString(cursor.getColumnIndex("date"))
             val count = cursor.getString(cursor.getColumnIndex("count"))
-            val dataPair = arrayListOf(date, count)
+            val score = Score(date,count)
 
-            resultList.add(dataPair)
+            resultList.add(score)
         }
         cursor.close()
         return resultList
@@ -94,8 +95,10 @@ class DBOpenHelper(private val context: Context) {
     }
 
 
-    fun updateTodayCount(date: String, count: String) {
+    fun updateTodayCount(score: Score) {
         // 오늘날짜로 된 데이터가 있는지 확인. 없으면 새로운 row추가 .있으면 기존 count update
+        val date = score.date
+        val count = score.count
 
         DB = DBHelper.readableDatabase
         val cursor = DB.query(DB_NAME, null, "date=?", arrayOf(date), null, null, null)

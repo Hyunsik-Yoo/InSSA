@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 
@@ -23,7 +22,7 @@ import com.macgongmon.inssa.R
  */
 
 class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.MainListViewHolder>() {
-    var listItems = input
+    private var listItems = input
     lateinit var font: Typeface
     lateinit var context: Context
 
@@ -42,7 +41,7 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
     }
 
     override fun onBindViewHolder(holder: MainListViewHolder, position: Int) {
-        val current = listItems.get(position) as ArrayList<*>
+        val current = listItems[position] as ArrayList<*>
 
         holder.date.typeface = font
         holder.count.typeface = font
