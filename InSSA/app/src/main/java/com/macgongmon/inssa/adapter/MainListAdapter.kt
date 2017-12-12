@@ -69,7 +69,6 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
 
 
     class MainListViewHolder(view: View): RecyclerView.ViewHolder(view){
-
         var icon: ImageView = view.findViewById(R.id.main_list_icon)
         var date: TextView = view.findViewById(R.id.main_list_date)
         var count: TextView = view.findViewById(R.id.main_list_count)

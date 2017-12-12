@@ -25,10 +25,6 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     private var presenter: MainActivityPresenter? = null
     lateinit var listView: RecyclerView
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     override fun setTextViewNotoFont(textView: TextView) {
         val font = Typeface.createFromAsset(this.assets, "NotoSansCJKkr-Bold_0.otf")
         textView.typeface = font
@@ -36,10 +32,6 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
 
     override fun setTotalScore(score: Int) {
         my_point!!.text = score.toString()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun getContext(): Context {
