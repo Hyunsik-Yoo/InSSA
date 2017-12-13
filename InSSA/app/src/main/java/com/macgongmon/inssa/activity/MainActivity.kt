@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemClickListener {
 
     private val TAG = javaClass.simpleName
-    private var presenter: MainActivityPresenter? = null
+    lateinit var presenter: MainActivityPresenter
     lateinit var listView: RecyclerView
 
     override fun setTextViewNotoFont(textView: TextView) {
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
     override fun setTotalScore(score: Int) {
-        my_point!!.text = score.toString()
+        my_point.text = score.toString()
     }
 
     override fun getContext(): Context {
@@ -53,24 +53,26 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
     override fun getTotalPoint(): Int{
-        val totalPoint = Integer.parseInt(my_point!!.text.toString())
-        return totalPoint
+        return Integer.parseInt(my_point.text.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = MainActivityPresenter(this)
+
+
         listView = findViewById<RecyclerView>(R.id.list_view)
 
         var layoutManager = LinearLayoutManager(this)
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
         layoutManager.scrollToPosition(0)
-        listView.setLayoutManager(layoutManager);
+        listView.setLayoutManager(layoutManager)
+        list_view.layoutManager = layoutManager
 
         // 메뉴버튼 눌렀을때
         btn_menu.setOnClickListener { view ->
-            presenter!!.menuOnClicked(view)
+            presenter.menuOnClicked(view)
         }
 
         setTextViewNotoFont(main_total)
@@ -86,16 +88,16 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         */
 
         // DB로드(과거 데이터 로드)
-        presenter!!.openDBHelper(this)
+        presenter.openDBHelper(this)
 
         // 메인화면의 리스트뷰 어댑터 설정
         // 초기화면에 토탈포인트 설정
-        presenter!!.refreshData()
+        presenter.refreshData()
 
         // 리스트뷰의 당겨서 새로고침 기능
-        refresh_layout!!.setOnRefreshListener {
-            presenter!!.refreshData()
-            refresh_layout!!.isRefreshing = false // 로딩표시 제거
+        refresh_layout.setOnRefreshListener {
+            presenter.refreshData()
+            refresh_layout.isRefreshing = false // 로딩표시 제거
         }
 
         // 리스트뷰 드래그하면 맨위에 꺼 굵은글씨
@@ -113,7 +115,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
                 .setMessage("정말로 나의 데이터를 삭제하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("삭제") { dialogInterface, i ->
-                    presenter!!.onClickedMenuDelete()
+                    presenter.onClickedMenuDelete()
                 }
                 .setNegativeButton("취소") { dialogInterface, i -> dialogInterface.cancel() }.show()
     }
@@ -124,7 +126,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
 
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        presenter!!.onMenuItemClick(item)
+        presenter.onMenuItemClick(item)
         return super.onOptionsItemSelected(item)
     }
 
