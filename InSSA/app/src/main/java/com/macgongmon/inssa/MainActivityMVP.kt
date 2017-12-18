@@ -2,6 +2,7 @@ package com.macgongmon.inssa
 
 import android.content.Context
 import android.content.res.AssetManager
+import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.widget.TextView
 import com.macgongmon.inssa.adapter.MainListAdapter
@@ -32,6 +33,8 @@ interface MainActivityMVP{
         fun setAdapter(adapter: MainListAdapter)
 
         fun startSettingActivity()
+
+        fun setLayoutManager(recyclerView: RecyclerView)
     }
 
     interface Presenter{

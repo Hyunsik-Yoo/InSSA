@@ -23,7 +23,6 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
 
     private val TAG = javaClass.simpleName
     lateinit var presenter: MainActivityPresenter
-    lateinit var listView: RecyclerView
 
     override fun setTextViewNotoFont(textView: TextView) {
         val font = Typeface.createFromAsset(this.assets, "NotoSansCJKkr-Bold_0.otf")
@@ -56,26 +55,27 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         return Integer.parseInt(my_point.text.toString())
     }
 
+    // RecyclerView LayoutManager 설정
+    override fun setLayoutManager(recyclerView: RecyclerView){
+        var layoutManager = LinearLayoutManager(this)
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
+        layoutManager.scrollToPosition(0)
+        recyclerView.layoutManager = layoutManager
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         presenter = MainActivityPresenter(this)
 
-
-        listView = findViewById<RecyclerView>(R.id.list_view)
-
-        var layoutManager = LinearLayoutManager(this)
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
-        layoutManager.scrollToPosition(0)
-        listView.setLayoutManager(layoutManager)
-        list_view.layoutManager = layoutManager
+        setLayoutManager(list_view)
+        setTextViewNotoFont(main_total)
 
         // 메뉴버튼 눌렀을때
         btn_menu.setOnClickListener { view ->
             presenter.menuOnClicked(view)
         }
-
-        setTextViewNotoFont(main_total)
 
 
         // 테스트용 광고 요청
@@ -103,10 +103,12 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         // 리스트뷰 드래그하면 맨위에 꺼 굵은글씨
 
         // 이거 무슨코드지?
+        /*
         val styledAttributes = applicationContext.theme.obtainStyledAttributes(
                 intArrayOf(android.R.attr.actionBarSize))
         val mActionBarSize = styledAttributes.getDimension(0, 0f).toInt()
         styledAttributes.recycle()
+        */
     }
 
     override fun showDeleteDialog() {
@@ -121,7 +123,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
     override fun setAdapter(adapter: MainListAdapter){
-        listView.adapter = adapter
+        list_view.adapter = adapter
     }
 
 
