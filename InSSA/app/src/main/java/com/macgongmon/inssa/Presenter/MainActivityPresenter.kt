@@ -15,7 +15,6 @@ import com.macgongmon.inssa.MainActivityMVP
  */
 
 class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presenter {
-    var model: MainActivityMVP.Model? = null
     var view: MainActivityMVP.View = view
 
     override fun menuOnClicked(v: View) {
@@ -42,14 +41,7 @@ class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presen
 
     override fun onMenuItemClick(item: MenuItem) {
         when (item.itemId) {
-            R.id.action_mypoint -> {
-                val totalPoint = view.getTotalPoint()
-                try {
-                    //threadScore().execute(totalPoint)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
+            R.id.action_mypoint -> view.showReadyDialog()
             R.id.action_delete_all -> view.showDeleteDialog()
             R.id.action_refresh -> refreshData()
             R.id.action_auth -> view.startSettingActivity()

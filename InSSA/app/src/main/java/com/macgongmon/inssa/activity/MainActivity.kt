@@ -37,31 +37,49 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         return getContext()
     }
 
-    override fun startSettingActivity(){
+    override fun startSettingActivity() {
         val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
         startActivity(intent)
     }
 
     // 메뉴창 열리기
     override fun showPopupMenu(view: View) {
-            val popup = PopupMenu(this, view)
-            val inflater = popup.menuInflater
-            inflater.inflate(R.menu.main_activity_actions, popup.menu)
-            popup.setOnMenuItemClickListener(this)
-            popup.show()
+        val popup = PopupMenu(this, view)
+        val inflater = popup.menuInflater
+        inflater.inflate(R.menu.main_activity_actions, popup.menu)
+        popup.setOnMenuItemClickListener(this)
+        popup.show()
     }
 
-    override fun getTotalPoint(): Int{
+    override fun getTotalPoint(): Int {
         return Integer.parseInt(my_point.text.toString())
     }
 
     // RecyclerView LayoutManager 설정
-    override fun setLayoutManager(recyclerView: RecyclerView){
+    override fun setLayoutManager(recyclerView: RecyclerView) {
         var layoutManager = LinearLayoutManager(this)
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
         layoutManager.scrollToPosition(0)
         recyclerView.layoutManager = layoutManager
 
+    }
+
+    override fun showDeleteDialog() {
+        AlertDialog.Builder(this)
+                .setTitle("내 기록 삭제")
+                .setMessage("정말로 나의 데이터를 삭제하시겠습니까?")
+                .setCancelable(false)
+                .setPositiveButton("삭제") { dialogInterface, i ->
+                    presenter.onClickedMenuDelete()
+                }
+                .setNegativeButton("취소") { dialogInterface, i -> dialogInterface.cancel() }.show()
+    }
+
+    override fun showReadyDialog(){
+        AlertDialog.Builder(this)
+                .setMessage("준비중입니다.")
+                .setCancelable(false)
+                .setPositiveButton("확인"){dialogInterface, i -> dialogInterface.cancel() }.show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,15 +95,6 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
             presenter.menuOnClicked(view)
         }
 
-
-        // 테스트용 광고 요청
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice("6E7A7D4083F508597BB26B3EBA7F87FE").build();
-
-        // 광고 요청
-        /*
-        val adRequest = AdRequest.Builder().build()
-        adView!!.loadAd(adRequest)
-        */
 
         // DB로드(과거 데이터 로드)
         presenter.openDBHelper(this)
@@ -111,19 +120,10 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         */
     }
 
-    override fun showDeleteDialog() {
-        AlertDialog.Builder(this)
-                .setTitle("내 기록 삭제")
-                .setMessage("정말로 나의 데이터를 삭제하시겠습니까?")
-                .setCancelable(false)
-                .setPositiveButton("삭제") { dialogInterface, i ->
-                    presenter.onClickedMenuDelete()
-                }
-                .setNegativeButton("취소") { dialogInterface, i -> dialogInterface.cancel() }.show()
-    }
 
-    override fun setAdapter(adapter: MainListAdapter){
+    override fun setAdapter(adapter: MainListAdapter) {
         list_view.adapter = adapter
+        list_view.adapter.notifyItemChanged(0)
     }
 
 

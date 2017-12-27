@@ -11,10 +11,6 @@ import com.macgongmon.inssa.adapter.MainListAdapter
  * Created by hyunsikyoo on 09/12/2017.
  */
 interface MainActivityMVP{
-    interface Model{
-        fun createDayDate(date: String, score: Int)
-    }
-
     interface View{
         fun setTotalScore(score: Int)
 
@@ -35,6 +31,8 @@ interface MainActivityMVP{
         fun startSettingActivity()
 
         fun setLayoutManager(recyclerView: RecyclerView)
+
+        fun showReadyDialog()
     }
 
     interface Presenter{
