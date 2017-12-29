@@ -1,73 +1,79 @@
 package com.macgongmon.inssa.activity
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.text.Html
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.macgongmon.inssa.PrefManager
+import com.macgongmon.inssa.Presenter.WelcomeActivityPresenter
 import com.macgongmon.inssa.R
+import com.macgongmon.inssa.WelcomeActivityMVP
+import com.macgongmon.inssa.adapter.ViewPagerAdapter
+import kotlinx.android.synthetic.main.activity_welcome.*
 
-class WelcomeActivity : Activity() {
+class WelcomeActivity : BaseActivity(), WelcomeActivityMVP.View {
 
-    private var viewPager: ViewPager? = null
-    private var myViewPagerAdapter: MyViewPagerAdapter? = null
-    private var dotsLayout: LinearLayout? = null
-    private lateinit var dots: Array<TextView?>
-    private var layouts: IntArray? = null
-    private var btnSkip: Button? = null
-    private var btnNext: Button? = null
-    private var prefManager: PrefManager? = null
+    lateinit var dots: ArrayList<TextView>
+    lateinit var layouts: IntArray
+    lateinit var prefManager: PrefManager
+    lateinit var presenter: WelcomeActivityMVP.Presenter
 
-    //  viewpager change listener
-    internal var viewPagerPageChangeListener: ViewPager.OnPageChangeListener = object : ViewPager.OnPageChangeListener {
+    override fun setNextButtonText(text: String) {
+        btn_skip.text = text
+    }
 
-        override fun onPageSelected(position: Int) {
-            addBottomDots(position)
+    override fun setSkipButtonText(text: String) {
+        btn_skip.text = text
+    }
 
-            // changing the next button text 'NEXT' / 'GOT IT'
-            if (position == layouts!!.size - 1) {
-                // last page. make button text to GOT IT
-                btnNext!!.text = "시작하기"
-                btnSkip!!.setOnClickListener {
-                    val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
-                    startActivity(intent)
-                }
-                btnSkip!!.text = "권한설정"
-            } else {
-                // still pages are left
-                btnNext!!.text = "다음"
-                btnSkip!!.visibility = View.VISIBLE
-            }
-        }
+    override fun setSkipButtonVisible() {
+        btn_skip.visibility = View.VISIBLE
+    }
 
-        override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-
-        }
-
-        override fun onPageScrollStateChanged(arg0: Int) {
-
+    override fun setSkipListener() {
+        btn_skip.setOnClickListener {
+            val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
+            startActivity(intent)
         }
     }
+
+    override fun addBottomDots(currentPage: Int) {
+        layouts = intArrayOf(R.layout.welcome_slide1, R.layout.welcome_slide2, R.layout.welcome_slide3)
+        dots = arrayListOf()
+
+        val colorsActive = resources.getIntArray(R.array.array_dot_active)
+        val colorsInactive = resources.getIntArray(R.array.array_dot_inactive)
+
+        layoutDots.removeAllViews()
+        for (i in layouts.indices) {
+            val item = TextView(this)
+            item.text = Html.fromHtml("&#8226;")
+            item.text = Html.fromHtml("&#8226;")
+            item.textSize = 35f
+            item.setTextColor(colorsInactive[currentPage])
+            dots.add(item)
+            layoutDots.addView(item)
+        }
+
+        if (dots.size > 0)
+            dots[currentPage].setTextColor(colorsActive[currentPage])
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
+        presenter = WelcomeActivityPresenter(this)
+
         // Checking for first time launch - before calling setContentView()
         prefManager = PrefManager(this)
-        if (!prefManager!!.isFirstTimeLaunch) {
+        if (!prefManager.isFirstTimeLaunch) {
             launchHomeScreen()
             finish()
         }
@@ -79,15 +85,6 @@ class WelcomeActivity : Activity() {
 
         setContentView(R.layout.activity_welcome)
 
-        viewPager = findViewById<View>(R.id.view_pager) as ViewPager
-        dotsLayout = findViewById<View>(R.id.layoutDots) as LinearLayout
-        btnSkip = findViewById<View>(R.id.btn_skip) as Button
-        btnNext = findViewById<View>(R.id.btn_next) as Button
-
-
-        // layouts of all welcome sliders
-        // add few more layouts if you want
-        layouts = intArrayOf(R.layout.welcome_slide1, R.layout.welcome_slide2, R.layout.welcome_slide3)
 
         // adding bottom dots
         addBottomDots(0)
@@ -95,45 +92,34 @@ class WelcomeActivity : Activity() {
         // making notification bar transparent
         changeStatusBarColor()
 
-        myViewPagerAdapter = MyViewPagerAdapter()
-        viewPager!!.adapter = myViewPagerAdapter
-        viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
+        view_pager.adapter = ViewPagerAdapter(this, layouts)
+        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+            override fun onPageSelected(position: Int) {
+                addBottomDots(position)
+                presenter.onPageSelected(position, layouts.size)
+            }
+        })
 
-        btnSkip!!.setOnClickListener { launchHomeScreen() }
-        btnNext!!.setOnClickListener {
+        btn_skip.setOnClickListener { launchHomeScreen() }
+        btn_next.setOnClickListener {
             // checking for last page
             // if last page home screen will be launched
             val current = getItem(+1)
-            if (current < layouts!!.size) {
-                // move to next screen
-                viewPager!!.currentItem = current
+            if (current < layouts.size) {
+                view_pager.currentItem = current
             } else {
                 launchHomeScreen()
             }
         }
     }
 
-    private fun addBottomDots(currentPage: Int) {
-        dots = arrayOfNulls(layouts!!.size)
-
-        val colorsActive = resources.getIntArray(R.array.array_dot_active)
-        val colorsInactive = resources.getIntArray(R.array.array_dot_inactive)
-
-        dotsLayout!!.removeAllViews()
-        for (i in dots!!.indices) {
-            dots!![i] = TextView(this)
-            dots!![i]!!.text = Html.fromHtml("&#8226;")
-            dots!![i]!!.textSize = 35f
-            dots!![i]!!.setTextColor(colorsInactive[currentPage])
-            dotsLayout!!.addView(dots!![i])
-        }
-
-        if (dots!!.size > 0)
-            dots!![currentPage]!!.setTextColor(colorsActive[currentPage])
-    }
 
     private fun getItem(i: Int): Int {
-        return viewPager!!.currentItem + i
+        return view_pager.currentItem + i
     }
 
     private fun launchHomeScreen() {
@@ -150,36 +136,6 @@ class WelcomeActivity : Activity() {
             val window = window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-    /**
-     * View pager adapter
-     */
-    inner class MyViewPagerAdapter : PagerAdapter() {
-        private var layoutInflater: LayoutInflater? = null
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            layoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-            val view = layoutInflater!!.inflate(layouts!![position], container, false)
-            container.addView(view)
-
-            return view
-        }
-
-        override fun getCount(): Int {
-            return layouts!!.size
-        }
-
-        override fun isViewFromObject(view: View, obj: Any): Boolean {
-            return view === obj
-        }
-
-
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            val view = `object` as View
-            container.removeView(view)
         }
     }
 }

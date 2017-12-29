@@ -46,6 +46,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/main_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -56,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"
-                android:textSize="210px"
+                android:textSize="200px"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:includeFontPadding="false"
@@ -69,8 +70,8 @@
                 android:text="@string/main_total"
                 android:textColor="#ffffff"
                 android:layout_centerHorizontal="true"
-                android:layout_alignTop="@id/my_point"
-                android:textSize="25px"/>
+                android:layout_above="@id/main_circle"
+                android:textSize="40px"/>
         </RelativeLayout>
 
 

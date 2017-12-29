@@ -2,7 +2,6 @@ package com.macgongmon.inssa.adapter
 
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -42,7 +41,6 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
 
         holder.date.text = current.date as String
         holder.count.text = current.count as String
-        holder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.up))
 
     }
 
@@ -53,7 +51,6 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
     class MainListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             LayoutInflater.from(parent.context)
                     .inflate(R.layout.main_listview, parent, false)) {
-        val icon = itemView.main_list_icon
         val date = itemView.main_list_date
         val count = itemView.main_list_count
     }
