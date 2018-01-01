@@ -29,6 +29,7 @@ class NotificationListener : NotificationListenerService() {
         if (packageName == KAKAO_PACKAGE) {
             refresh()
             messageCount += 1
+
         }
     }
 
@@ -56,7 +57,7 @@ class NotificationListener : NotificationListenerService() {
 
     companion object {
         var messageCount = 0
-        lateinit var timeIndex: String
+        var timeIndex: String = getTimeNow()
 
         /**
          * 현재시간을 ISO format형태로 반환해줌
@@ -77,8 +78,12 @@ class NotificationListener : NotificationListenerService() {
          */
         fun refresh() {
             val now = getTimeNow()
-            messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(now)
-            timeIndex = now
+            if (messageCount == null) {
+                messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(now)
+                timeIndex = now
+            }
+
+
 
             val score = Score(timeIndex, messageCount.toString())
             DBOpenHelper.dbOpenHelper.updateTodayCount(score)
