@@ -1,13 +1,11 @@
 package com.macgongmon.inssa.Presenter
-
-import android.content.Context
 import android.view.MenuItem
 import android.view.View
 import com.macgongmon.inssa.adapter.MainListAdapter
 import com.macgongmon.inssa.NotificationListener
 import com.macgongmon.inssa.R
-import com.macgongmon.inssa.db.DBOpenHelper
 import com.macgongmon.inssa.MainActivityMVP
+import com.macgongmon.inssa.db.RealmHelper
 
 
 /**
@@ -16,27 +14,28 @@ import com.macgongmon.inssa.MainActivityMVP
 
 class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presenter {
     var view: MainActivityMVP.View = view
+    lateinit var realmHelper: RealmHelper
+
+    override fun initRealm(realmHelper: RealmHelper) {
+        this.realmHelper = realmHelper
+    }
 
     override fun menuOnClicked(v: View) {
         view.showPopupMenu(v)
     }
 
-    override fun openDBHelper(context: Context) {
-        DBOpenHelper.dbOpenHelper = DBOpenHelper(context)
-        DBOpenHelper.dbOpenHelper.open()
-    }
-
     override fun onClickedMenuDelete(){
-        DBOpenHelper.dbOpenHelper.deleteAll()
+        realmHelper.deleteAll()
         NotificationListener.messageCount = 0
         refreshData()
     }
 
     override fun refreshData(){
         NotificationListener.refresh()
-        val listViewAdapter = MainListAdapter(DBOpenHelper.dbOpenHelper.getAllData())
+
+        val listViewAdapter = MainListAdapter(realmHelper.getAllData())
         view.setAdapter(listViewAdapter)
-        view.setTotalScore(DBOpenHelper.dbOpenHelper.myPoint())
+        view.setTotalScore(realmHelper.myPoint())
     }
 
     override fun onMenuItemClick(item: MenuItem) {

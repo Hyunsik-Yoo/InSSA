@@ -123,7 +123,7 @@ class WelcomeActivity : BaseActivity(), WelcomeActivityMVP.View {
     }
 
     private fun launchHomeScreen() {
-        prefManager!!.isFirstTimeLaunch = false
+        prefManager.isFirstTimeLaunch = false
         startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
         finish()
     }

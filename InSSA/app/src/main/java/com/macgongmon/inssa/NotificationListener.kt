@@ -3,7 +3,7 @@ package com.macgongmon.inssa
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
-import com.macgongmon.inssa.db.DBOpenHelper
+import com.macgongmon.inssa.activity.MainActivity
 import com.macgongmon.inssa.model.Score
 
 import java.text.SimpleDateFormat
@@ -37,15 +37,13 @@ class NotificationListener : NotificationListenerService() {
         super.onNotificationRemoved(sbn)
     }
 
-
     /**
      * 서비스가 처음에 생성될때 한번 실행된다.(디바이스가 처음으로 켜질때에도 실행됨)
      * DB오픈하고, timeIndex 초기화
      */
     override fun onCreate() {
-        DBOpenHelper.dbOpenHelper = DBOpenHelper(applicationContext).open()
         timeIndex = getTimeNow()
-        messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(timeIndex)
+        messageCount = MainActivity.realmHelper.getTodayCount(timeIndex)
         Log.d(TAG, "NotificationListener created!")
         super.onCreate()
     }
@@ -78,15 +76,12 @@ class NotificationListener : NotificationListenerService() {
          */
         fun refresh() {
             val now = getTimeNow()
-            if (messageCount == null) {
-                messageCount = DBOpenHelper.dbOpenHelper.getTodayCount(now)
-                timeIndex = now
-            }
-
+            messageCount = MainActivity.realmHelper.getTodayCount(now)
+            timeIndex = now
 
 
             val score = Score(timeIndex, messageCount.toString())
-            DBOpenHelper.dbOpenHelper.updateTodayCount(score)
+            MainActivity.realmHelper.updateTodayCount(score)
 
             if (timeIndex != now) {
                 // 날짜라 다르단 소리는 DB에 업데이트를 하고 timeIndex 변경하고, message count 초기화시켜야함
@@ -96,11 +91,5 @@ class NotificationListener : NotificationListenerService() {
         }
 
     }
-
-
-
-
-
-
 
 }
