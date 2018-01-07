@@ -32,23 +32,22 @@ class RealmHelper{
             myPoint += count
         }
 
-        if (result.size != 0)
+        if (result.isNotEmpty())
             myPoint /= result.size
         return myPoint
     }
 
     fun updateTodayCount(score: Score) {
         // 오늘날짜로 된 데이터가 있는지 확인. 없으면 새로운 row추가 .있으면 기존 count update
+        realm.beginTransaction()
         val result = realm.where(Score::class.java)
                 .equalTo("date", score.date)
-                .and()
-                .equalTo("count", score.count)
-                .findAll()
-        realm.beginTransaction()
-        if(result.size == 0){
+                .findFirst()
+
+        if(result == null){
             realm.insert(score)
         }else{
-            result.first()?.let { it.count = score.count }
+            result.count = score.count
         }
         realm.commitTransaction()
     }

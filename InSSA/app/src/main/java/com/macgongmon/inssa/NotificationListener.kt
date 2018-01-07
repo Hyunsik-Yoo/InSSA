@@ -4,7 +4,9 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import com.macgongmon.inssa.activity.MainActivity
+import com.macgongmon.inssa.db.RealmHelper
 import com.macgongmon.inssa.model.Score
+import io.realm.Realm
 
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -26,11 +28,12 @@ class NotificationListener : NotificationListenerService() {
         val packageName = sbn.packageName
         Log.d(TAG, packageName)
 
+
         if (packageName == KAKAO_PACKAGE) {
             refresh()
             messageCount += 1
-
         }
+
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
@@ -42,6 +45,9 @@ class NotificationListener : NotificationListenerService() {
      * DB오픈하고, timeIndex 초기화
      */
     override fun onCreate() {
+        Realm.init(applicationContext)
+        MainActivity.realmHelper = RealmHelper()
+
         timeIndex = getTimeNow()
         messageCount = MainActivity.realmHelper.getTodayCount(timeIndex)
         Log.d(TAG, "NotificationListener created!")
@@ -52,6 +58,7 @@ class NotificationListener : NotificationListenerService() {
         Log.d(TAG, "NotificationListener destroyed")
         super.onDestroy()
     }
+
 
     companion object {
         var messageCount = 0
@@ -76,7 +83,7 @@ class NotificationListener : NotificationListenerService() {
          */
         fun refresh() {
             val now = getTimeNow()
-            messageCount = MainActivity.realmHelper.getTodayCount(now)
+            //messageCount = MainActivity.realmHelper.getTodayCount(now)
             timeIndex = now
 
 
