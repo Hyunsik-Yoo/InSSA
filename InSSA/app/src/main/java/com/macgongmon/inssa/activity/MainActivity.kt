@@ -16,6 +16,8 @@ import com.macgongmon.inssa.adapter.MainListAdapter
 import com.macgongmon.inssa.R
 import com.macgongmon.inssa.MainActivityMVP
 import com.macgongmon.inssa.Presenter.MainActivityPresenter
+import com.macgongmon.inssa.db.RealmHelper
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -23,6 +25,9 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
 
     private val TAG = javaClass.simpleName
     lateinit var presenter: MainActivityPresenter
+    companion object {
+        lateinit var realmHelper: RealmHelper
+    }
 
     override fun setTextViewNotoFont(textView: TextView) {
         val font = Typeface.createFromAsset(this.assets, "NotoSansCJKkr-Bold_0.otf")
@@ -82,6 +87,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
                 .setPositiveButton("확인"){dialogInterface, i -> dialogInterface.cancel() }.show()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -95,9 +101,11 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
             presenter.menuOnClicked(view)
         }
 
-
+        //DB로드
+        Realm.init(this);
+        realmHelper = RealmHelper()
         // DB로드(과거 데이터 로드)
-        presenter.openDBHelper(this)
+        presenter.initRealm(realmHelper)
 
         // 메인화면의 리스트뷰 어댑터 설정
         // 초기화면에 토탈포인트 설정

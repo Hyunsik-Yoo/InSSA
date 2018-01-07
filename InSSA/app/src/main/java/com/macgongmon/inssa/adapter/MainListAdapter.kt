@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.macgongmon.inssa.R
 import com.macgongmon.inssa.model.Score
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.main_listview.view.*
 import java.util.*
 
@@ -21,7 +22,7 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
     lateinit var context: Context
 
     init {
-        Collections.reverse(listItems)
+        listItems = listItems.reversed()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainListHolder {
@@ -39,8 +40,8 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
         holder.date.typeface = font
         holder.count.typeface = font
 
-        holder.date.text = current.date as String
-        holder.count.text = current.count as String
+        holder.date.text = current.date
+        holder.count.text = current.count
 
     }
 

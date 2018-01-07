@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.widget.TextView
 import com.macgongmon.inssa.adapter.MainListAdapter
+import com.macgongmon.inssa.db.RealmHelper
 
 /**
  * Created by hyunsikyoo on 09/12/2017.
@@ -40,10 +41,10 @@ interface MainActivityMVP{
 
         fun onMenuItemClick(item: MenuItem)
 
-        fun openDBHelper(context: Context)
-
         fun onClickedMenuDelete()
 
         fun refreshData()
+
+        fun initRealm(realmHelper: RealmHelper)
     }
 }
