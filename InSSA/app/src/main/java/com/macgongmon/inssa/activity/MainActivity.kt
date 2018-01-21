@@ -29,9 +29,9 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         lateinit var realmHelper: RealmHelper
     }
 
-    override fun setTextViewNotoFont(textView: TextView) {
+    fun initFont() {
         val font = Typeface.createFromAsset(this.assets, "NotoSansCJKkr-Bold_0.otf")
-        textView.typeface = font
+        main_total.typeface = font
     }
 
     override fun setTotalScore(score: Int) {
@@ -48,7 +48,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
     // 메뉴창 열리기
-    override fun showPopupMenu(view: View) {
+    private fun showPopupMenu(view: View) {
         val popup = PopupMenu(this, view)
         val inflater = popup.menuInflater
         inflater.inflate(R.menu.main_activity_actions, popup.menu)
@@ -61,11 +61,11 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
     // RecyclerView LayoutManager 설정
-    override fun setLayoutManager(recyclerView: RecyclerView) {
+    private fun initRecyclerView() {
         var layoutManager = LinearLayoutManager(this)
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
         layoutManager.scrollToPosition(0)
-        recyclerView.layoutManager = layoutManager
+        list_main_recycler.layoutManager = layoutManager
 
     }
 
@@ -88,55 +88,58 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        presenter = MainActivityPresenter(this)
-
-        setLayoutManager(list_view)
-        setTextViewNotoFont(main_total)
-
+    private fun initEvent(){
         // 메뉴버튼 눌렀을때
         btn_menu.setOnClickListener { view ->
-            presenter.menuOnClicked(view)
+            showPopupMenu(view)
         }
-
-        //DB로드
-        Realm.init(this);
-        realmHelper = RealmHelper()
-        // DB로드(과거 데이터 로드)
-        presenter.initRealm(realmHelper)
-
-        // 메인화면의 리스트뷰 어댑터 설정
-        // 초기화면에 토탈포인트 설정
-        presenter.refreshData()
 
         // 리스트뷰의 당겨서 새로고침 기능
         refresh_layout.setOnRefreshListener {
             presenter.refreshData()
             refresh_layout.isRefreshing = false // 로딩표시 제거
         }
-
-        // 리스트뷰 드래그하면 맨위에 꺼 굵은글씨
-
-        // 이거 무슨코드지?
-        /*
-        val styledAttributes = applicationContext.theme.obtainStyledAttributes(
-                intArrayOf(android.R.attr.actionBarSize))
-        val mActionBarSize = styledAttributes.getDimension(0, 0f).toInt()
-        styledAttributes.recycle()
-        */
     }
 
+    private fun initData(){
+        //DB로드
+        Realm.init(this);
+        realmHelper = RealmHelper()
+        // DB로드(과거 데이터 로드)
+        presenter.initRealm(realmHelper)
+    }
 
-    override fun setAdapter(adapter: MainListAdapter) {
-        list_view.adapter = adapter
-        list_view.adapter.notifyItemChanged(0)
+    private fun initView(){
+        presenter = MainActivityPresenter(this)
+
+        initRecyclerView();
+        initFont()
+
+        // 메인화면의 리스트뷰 어댑터 설정
+        // 초기화면에 토탈포인트 설정
+        presenter.refreshData()
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        initData()
+        initView()
+        initEvent()
+
+    }
+
+    override fun setAdapter() {
+        val listViewAdapter = MainListAdapter(realmHelper.getAllData())
+        list_main_recycler.adapter = listViewAdapter
+        list_main_recycler.adapter.notifyItemChanged(0)
     }
 
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        presenter.onMenuItemClick(item)
+        presenter.onMenuItemClick(item.itemId)
         return super.onOptionsItemSelected(item)
     }
 

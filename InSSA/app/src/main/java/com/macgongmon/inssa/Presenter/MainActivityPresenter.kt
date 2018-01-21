@@ -20,10 +20,6 @@ class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presen
         this.realmHelper = realmHelper
     }
 
-    override fun menuOnClicked(v: View) {
-        view.showPopupMenu(v)
-    }
-
     override fun onClickedMenuDelete(){
         realmHelper.deleteAll()
         NotificationListener.messageCount = 0
@@ -32,14 +28,11 @@ class MainActivityPresenter(view: MainActivityMVP.View) : MainActivityMVP.Presen
 
     override fun refreshData(){
         NotificationListener.refresh()
-
-        val listViewAdapter = MainListAdapter(realmHelper.getAllData())
-        view.setAdapter(listViewAdapter)
         view.setTotalScore(realmHelper.myPoint())
     }
 
-    override fun onMenuItemClick(item: MenuItem) {
-        when (item.itemId) {
+    override fun onMenuItemClick(itemID: Int) {
+        when (itemID) {
             R.id.action_mypoint -> view.showReadyDialog()
             R.id.action_delete_all -> view.showDeleteDialog()
             R.id.action_refresh -> refreshData()

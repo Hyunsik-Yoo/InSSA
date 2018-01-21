@@ -15,31 +15,24 @@ interface MainActivityMVP{
     interface View{
         fun setTotalScore(score: Int)
 
-        fun setTextViewNotoFont(textView: TextView)
-
         fun getAssets(): AssetManager
 
         fun getContext(): Context
-
-        fun showPopupMenu(view: android.view.View)
 
         fun getTotalPoint(): Int
 
         fun showDeleteDialog()
 
-        fun setAdapter(adapter: MainListAdapter)
+        fun setAdapter()
 
         fun startSettingActivity()
-
-        fun setLayoutManager(recyclerView: RecyclerView)
 
         fun showReadyDialog()
     }
 
     interface Presenter{
-        fun menuOnClicked(v: android.view.View)
 
-        fun onMenuItemClick(item: MenuItem)
+        fun onMenuItemClick(itemID: Int)
 
         fun onClickedMenuDelete()
 
