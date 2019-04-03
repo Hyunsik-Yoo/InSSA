@@ -1,94 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b2bc73a8-dbe6-4255-9d41-cc8b8b2abde3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/release/app-release.apk" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/release/output.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/androidTest/kotlin/com/macgongmon/inssa/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/assets/NotoSansCJKkr-Black_0.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/assets/NotoSansCJKkr-Bold_0.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/assets/NotoSansMonoCJKkr-Bold_0.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/MainActivityMVP.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/NotificationListener.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/PrefManager.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/Presenter/MainActivityPresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/Presenter/WelcomeActivityPresenter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/WelcomeActivityMVP.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/activity/BaseActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/activity/LoadingActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/activity/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/activity/WelcomeActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/adapter/MainListAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/adapter/ViewPagerAdapter.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/db/RealmHelper.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/model/Score.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/java/com/macgongmon/inssa/util/StringUtil.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/anim/anim_slide_in_left.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/anim/anim_slide_in_right.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/anim/anim_slide_out_left.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/btn_menu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/ic_reorder_white_36dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/ic_trending_flat_black_48dp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/line.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/loading.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/loading_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/loading_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/main_action_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/main_bg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/main_logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/today.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/up.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/welcome_slide1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/welcome_slide2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable-xxhdpi/welcome_slide3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/drawable/list_divider.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/activity_loading.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/activity_welcome.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/main_listview.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/welcome_slide1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/welcome_slide2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/layout/welcome_slide3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/menu/main_activity_actions.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xxhdpi/symbol.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/values/dimens.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/main/res/values/styles.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/app/src/test/java/com/macgongmon/inssa/ExampleUnitTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/InSSA/settings.gradle" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/kotlin/com/macgongmon/inssa/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/kotlin/com/macgongmon/inssa/ExampleInstrumentedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/MainActivityMVP.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/MainActivityMVP.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/WelcomeActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/WelcomeActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/adapter/MainListAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/adapter/MainListAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/adapter/ViewPagerAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/adapter/ViewPagerAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -151,6 +85,32 @@
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="kt" value="1" />
+          <entry key="properties" value="1" />
+          <entry key="xml" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Kotlin" value="1" />
+          <entry key="Properties" value="1" />
+          <entry key="XML" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="gradle" value="64" />
+          <entry key="kt" value="21" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Groovy" value="64" />
+          <entry key="Kotlin" value="21" />
+        </counts>
+      </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
@@ -158,10 +118,38 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="24" selection-end-column="7" />
+            <state relative-caret-position="270">
+              <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/MainActivity.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2675">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding>
+                <element signature="e#39#738#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest" />
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -2676,6 +2664,7 @@
       <list>
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/MainActivity.kt" />
       </list>
     </option>
   </component>
@@ -2694,6 +2683,20 @@
       <pane id="AndroidView">
         <subPane>
           <expand>
+            <path>
+              <item name="InSSA" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="InSSA" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="InSSA" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
             <path>
               <item name="InSSA" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -2718,6 +2721,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="device.picker.selection" value="05157df51b4f8b33" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
@@ -2740,7 +2744,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -2809,6 +2813,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.32967034" />
@@ -2818,13 +2823,17 @@
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Run" />
+      <window_info anchor="bottom" id="Find" weight="0.32959184" />
+      <window_info anchor="bottom" id="Debug" />
       <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="bottom" id="Logcat" order="1" />
+      <window_info anchor="bottom" id="Logcat" order="1" weight="0.32959184" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="5" visible="true" weight="0.32959184" />
-      <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Android Profiler" order="6" />
+      <window_info anchor="right" id="Preview" weight="0.32967034" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -2847,13 +2856,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="10" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="24" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -2887,6 +2889,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/macgongmon/inssa/activity/MainActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2675">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#39#738#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

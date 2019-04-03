@@ -1,7 +1,7 @@
 package com.macgongmon.inssa.adapter
 
 import android.content.Context
-import android.support.v4.view.PagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import android.view.ViewGroup
  * Created by hyunsikyoo on 29/12/2017.
  */
 
-class ViewPagerAdapter(context: Context, layouts: IntArray) : PagerAdapter() {
+class ViewPagerAdapter(context: Context, layouts: IntArray) : androidx.viewpager.widget.PagerAdapter() {
     private lateinit var layoutInflater: LayoutInflater
     val layouts = layouts
     val context = context

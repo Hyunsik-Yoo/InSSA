@@ -2,7 +2,7 @@ package com.macgongmon.inssa
 
 import android.content.Context
 import android.content.res.AssetManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.MenuItem
 import android.widget.TextView
 import com.macgongmon.inssa.adapter.MainListAdapter

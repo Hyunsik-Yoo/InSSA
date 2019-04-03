@@ -4,7 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.text.Html
 import android.view.View
 import android.view.WindowManager
@@ -93,7 +93,7 @@ class WelcomeActivity : BaseActivity(), WelcomeActivityMVP.View {
         changeStatusBarColor()
 
         view_pager.adapter = ViewPagerAdapter(this, layouts)
-        view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        view_pager.addOnPageChangeListener(object : androidx.viewpager.widget.ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {

@@ -3,11 +3,11 @@ package com.macgongmon.inssa.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.PopupMenu
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.PopupMenu
+import androidx.recyclerview.widget.RecyclerView
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -62,8 +62,8 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
 
     // RecyclerView LayoutManager 설정
     private fun initRecyclerView() {
-        var layoutManager = LinearLayoutManager(this)
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
+        var layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        layoutManager.setOrientation(androidx.recyclerview.widget.LinearLayoutManager.VERTICAL)
         layoutManager.scrollToPosition(0)
         list_main_recycler.layoutManager = layoutManager
 
@@ -134,7 +134,7 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     override fun setAdapter() {
         val listViewAdapter = MainListAdapter(realmHelper.getAllData())
         list_main_recycler.adapter = listViewAdapter
-        list_main_recycler.adapter.notifyItemChanged(0)
+        list_main_recycler.adapter?.notifyItemChanged(0)
     }
 
 

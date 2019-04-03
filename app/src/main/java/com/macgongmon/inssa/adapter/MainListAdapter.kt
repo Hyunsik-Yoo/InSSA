@@ -2,7 +2,7 @@ package com.macgongmon.inssa.adapter
 
 import android.content.Context
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.macgongmon.inssa.R
@@ -16,7 +16,7 @@ import java.util.*
  * Created by hyunsikyoo on 24/08/2017.
  */
 
-class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
+class MainListAdapter(input: List<*>) : androidx.recyclerview.widget.RecyclerView.Adapter<MainListAdapter.MainListHolder>() {
     private var listItems = input
     lateinit var font: Typeface
     lateinit var context: Context
@@ -49,7 +49,7 @@ class MainListAdapter(input: List<*>) : RecyclerView.Adapter<MainListAdapter.Mai
         return listItems.size
     }
 
-    class MainListHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+    class MainListHolder(parent: ViewGroup) : androidx.recyclerview.widget.RecyclerView.ViewHolder(
             LayoutInflater.from(parent.context)
                     .inflate(R.layout.main_listview, parent, false)) {
         val date = itemView.main_list_date
