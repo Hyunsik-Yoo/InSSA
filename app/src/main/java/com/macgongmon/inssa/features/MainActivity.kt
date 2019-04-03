@@ -1,30 +1,23 @@
-package com.macgongmon.inssa.activity
+package com.macgongmon.inssa.features
 
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AlertDialog
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.appcompat.widget.PopupMenu
-import androidx.recyclerview.widget.RecyclerView
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 
 import com.macgongmon.inssa.adapter.MainListAdapter
 import com.macgongmon.inssa.R
-import com.macgongmon.inssa.MainActivityMVP
-import com.macgongmon.inssa.Presenter.MainActivityPresenter
 import com.macgongmon.inssa.db.RealmHelper
-import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemClickListener {
-
-    private val TAG = javaClass.simpleName
     lateinit var presenter: MainActivityPresenter
+
     companion object {
         lateinit var realmHelper: RealmHelper
     }
@@ -80,15 +73,15 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
                 .setNegativeButton("취소") { dialogInterface, i -> dialogInterface.cancel() }.show()
     }
 
-    override fun showReadyDialog(){
+    override fun showReadyDialog() {
         AlertDialog.Builder(this)
                 .setMessage("준비중입니다.")
                 .setCancelable(false)
-                .setPositiveButton("확인"){dialogInterface, i -> dialogInterface.cancel() }.show()
+                .setPositiveButton("확인") { dialogInterface, i -> dialogInterface.cancel() }.show()
     }
 
 
-    private fun initEvent(){
+    private fun initEvent() {
         // 메뉴버튼 눌렀을때
         btn_menu.setOnClickListener { view ->
             showPopupMenu(view)
@@ -101,18 +94,14 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
         }
     }
 
-    private fun initData(){
-        //DB로드
-        Realm.init(this);
+    private fun initData() {
         realmHelper = RealmHelper()
-        // DB로드(과거 데이터 로드)
+        presenter = MainActivityPresenter(this)
         presenter.initRealm(realmHelper)
     }
 
-    private fun initView(){
-        presenter = MainActivityPresenter(this)
-
-        initRecyclerView();
+    private fun initView() {
+        initRecyclerView()
         initFont()
 
         // 메인화면의 리스트뷰 어댑터 설정
@@ -124,7 +113,6 @@ class MainActivity : BaseActivity(), MainActivityMVP.View, PopupMenu.OnMenuItemC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initData()
         initView()
         initEvent()

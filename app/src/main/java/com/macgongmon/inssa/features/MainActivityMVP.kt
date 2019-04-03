@@ -1,4 +1,4 @@
-package com.macgongmon.inssa
+package com.macgongmon.inssa.features
 
 import android.content.Context
 import android.content.res.AssetManager

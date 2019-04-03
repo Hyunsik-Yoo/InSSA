@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.macgongmon.inssa.activity.MainActivity">
+    tools:context="com.macgongmon.inssa.features.MainActivity">
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"

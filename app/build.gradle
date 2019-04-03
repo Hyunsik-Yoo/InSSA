@@ -22,7 +22,7 @@ android {
     }
 }
 realm {
-    syncEnabled = true;
+    syncEnabled = true
 }
 
 dependencies {
@@ -37,6 +37,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // Rx
+    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: "2.1.0"
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: "2.2.3"
+    implementation group: 'com.jakewharton.rxbinding3', name: 'rxbinding', version: '3.0.0-alpha2'
 }
 repositories {
     mavenCentral()

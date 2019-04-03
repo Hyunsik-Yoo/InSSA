@@ -3,7 +3,7 @@ package com.macgongmon.inssa
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
-import com.macgongmon.inssa.activity.MainActivity
+import com.macgongmon.inssa.features.MainActivity
 import com.macgongmon.inssa.db.RealmHelper
 import com.macgongmon.inssa.model.Score
 import io.realm.Realm

@@ -1,10 +1,6 @@
-package com.macgongmon.inssa.Presenter
-import android.view.MenuItem
-import android.view.View
-import com.macgongmon.inssa.adapter.MainListAdapter
+package com.macgongmon.inssa.features
 import com.macgongmon.inssa.NotificationListener
 import com.macgongmon.inssa.R
-import com.macgongmon.inssa.MainActivityMVP
 import com.macgongmon.inssa.db.RealmHelper
 
 
